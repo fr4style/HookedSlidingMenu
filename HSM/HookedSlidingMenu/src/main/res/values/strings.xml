@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HookedSlidingMenu</string>
+    <string name="hello_world">This is a simple project to show how to build a hooked sliding menu</string>
+
+    <string name="btn1">Button 1</string>
+    <string name="btn2">Button 2</string>
+    <string name="btn3">Button 3</string>
+
+</resources>
