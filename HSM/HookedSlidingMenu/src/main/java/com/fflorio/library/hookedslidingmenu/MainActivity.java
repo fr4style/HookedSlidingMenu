@@ -35,7 +35,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fflorio.library.hookedslidingmenu.ui.HookedMenuEventListener;
+import com.fflorio.library.hookedslidingmenu.ui.HookedMenuLayout;
 
 
 public class MainActivity extends Activity {
@@ -60,5 +64,22 @@ public class MainActivity extends Activity {
         final View button3 = findViewById(R.id.btn3);
         button3.setOnClickListener(clickListener);
 
+        final TextView menuStatusLabel = (TextView)findViewById(R.id.status);
+
+        final String openLbl = getString(R.string.open);
+        final String closeLbl = getString(R.string.close);
+
+        final HookedMenuLayout hsm = (HookedMenuLayout) findViewById(R.id.hookedMenu);
+
+        menuStatusLabel.setText(hsm.isOpen() ? openLbl : closeLbl);
+
+        hsm.addHookedMenuEventListener(new HookedMenuEventListener() {
+            @Override public void onStatusChanged(boolean isOpen) {
+                menuStatusLabel.setText(isOpen ? openLbl : closeLbl);
+            }
+        });
+
     }
+
+
 }

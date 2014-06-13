@@ -44,16 +44,21 @@ import android.view.ViewGroup;
 
 import com.fflorio.library.hookedslidingmenu.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HookedMenuLayout extends ViewGroup{
 
     //Obj
     private ViewDragHelper mDragHelper;
+    private List<HookedMenuEventListener> listeners = new ArrayList<HookedMenuEventListener>();
 
     //UI
     private View hookView; //the view to drag
     private View menuContent;
 
     //Values
+    /** menu status */private boolean isOpen = false;
     private boolean startClosed = true;
 
     private float mInitialMotionX;
@@ -83,6 +88,19 @@ public class HookedMenuLayout extends ViewGroup{
         menuContent = findViewById(R.id.menuContent);
     }
 
+//-----------------------------------------------------------
+// EventListener
+//-----------------------------------------------------------
+    public void addHookedMenuEventListener(HookedMenuEventListener listener){ listeners.add(listener); }
+    public void removeHookedMenuEventListener(HookedMenuEventListener listener){ listeners.remove(listener); }
+
+    public void updateListeners(boolean newStatus){
+        if(isOpen == newStatus) return;
+        for(HookedMenuEventListener listener: listeners)
+            listener.onStatusChanged(newStatus);
+    }
+
+    public boolean isOpen(){ return isOpen; }
 
 //-----------------------------------------------------------
 // CustomLayout implementation
@@ -256,6 +274,16 @@ public class HookedMenuLayout extends ViewGroup{
             //menuContent.setAlpha(mDragOffset); Add an alpha behaviour to the contentview
 
             requestLayout();
+
+            if(mDragOffset == 0){
+                boolean newStatus = false;
+                updateListeners(newStatus);
+                isOpen = newStatus;
+            }else if(mDragOffset == 1){
+                boolean newStatus = true;
+                updateListeners(newStatus);
+                isOpen = newStatus;
+            }
         }
 
         @Override public void onViewReleased(View releasedChild, float xvel, float yvel) {

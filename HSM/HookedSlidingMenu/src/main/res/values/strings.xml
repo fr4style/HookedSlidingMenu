@@ -3,6 +3,10 @@
 
     <string name="app_name">HookedSlidingMenu</string>
     <string name="hello_world">This is a simple project to show how to build a hooked sliding menu</string>
+    <string name="statusLabel">MENU STATUS</string>
+
+    <string name="open">OPEN</string>
+    <string name="close">CLOSE</string>
 
     <string name="btn1">Button 1</string>
     <string name="btn2">Button 2</string>
